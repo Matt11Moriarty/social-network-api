@@ -4,7 +4,7 @@ const { User } = require('../models');
 module.exports = {
     async getAllUsers(req, res) {
         try {
-            const users = await User.find();
+            const users = await User.find().select('-__v').lean()
             res.json(users);
         } catch (err) {
             res.status(500).json(err);
@@ -12,7 +12,7 @@ module.exports = {
     },
     async getOneUser(req, res) {
         try {
-            const user = await User.findOne({ _id: req.params.id })
+            const user = await User.findOne({ _id: req.params.id }).select('-__v').lean();
 
             if (!user) {
                 return res.status(400).json({message: 'No user with this id'});
