@@ -6,11 +6,8 @@ const thoughtSchema = new Schema(
             type: String,
             required: true,
             unique: true,
-            validate: {
-                validator: function(thoughtText) {
-                    return thoughtText >= 1 ? true : false 
-                }
-            }
+            minLength: 1,
+            maxLength: 280
         },
         createdAt: {
             type: Date,
@@ -20,6 +17,22 @@ const thoughtSchema = new Schema(
             type: String,
             required: true,
             ref: 'user'
+        },
+        reactions: [{
+            type: Schema.Types.ObjectId,
+            ref: 'reaction'
+        }]
+    },
+    {
+        toJSON: {
+            getters: true,
+            virtuals: true
         }
     }
-)
+);
+
+thoughtSchema.virtual('reactionCount').get(function () {
+    return this.reactions.length;
+})
+
+module.exports = Thought;

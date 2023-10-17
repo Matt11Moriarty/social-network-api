@@ -25,6 +25,13 @@ const userSchema = new Schema(
             }
         ],
         friends: [this.Schema]        
+    },
+    {
+        toJSON: {
+            virtuals: true,
+            getters: true,
+        },
+        id: false
     }
 );
 
