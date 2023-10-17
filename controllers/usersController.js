@@ -55,5 +55,21 @@ module.exports = {
         } catch (err) {
             res.status(500).json(err)
         }
+    },
+    async addToFriendList(req, res) {
+        try {
+            const result = await User.findByIdAndUpdate(
+                { _id: req.params.id }, 
+                { $addToSet: { friends: req.params.friendId } }, 
+                { runValidators: true, new: true }
+            );
+
+            if (!result) {
+                res.status(400).json({ message: 'No student found with that ID'})
+            }
+            res.status(200).json(result);
+        } catch (err) {
+            res.status(500).json(err);
+        }
     }
 }
