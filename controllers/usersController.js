@@ -1,4 +1,3 @@
-// const { ObjectId } = require('mongoose').Types;
 const { User } = require('../models');
 
 module.exports = {
@@ -15,7 +14,7 @@ module.exports = {
             const user = await User.findOne({ _id: req.params.id }).select('-__v')
 
             if (!user) {
-                return res.status(400).json({message: `No user with id ${req.params.id}.` });
+                return res.status(400).json({ message: `No user with id ${req.params.id}.` });
             }
             res.status(200).json({ user })
 
@@ -34,15 +33,15 @@ module.exports = {
     async updateOneUser(req, res) {
         try {
             const result = await User.findOneAndUpdate(
-                { _id: req.params.id }, 
-                { 
+                { _id: req.params.id },
+                {
                     username: req.body.username,
                     email: req.body.email
                 })
             if (!result) {
                 res.status(400).json({ message: `No user found with ID ${req.params.id}.` })
             }
-            res.status(200).json({ message: `User ${req.params.id} has been updated`})
+            res.status(200).json({ message: `User ${req.params.id} has been updated` })
         } catch (err) {
             res.status(500).json(err);
         }
@@ -53,7 +52,7 @@ module.exports = {
             if (!result) {
                 res.status(400).json({ message: `No user found with ID ${req.params.id}` })
             }
-            res.status(200).json({ message: `User ${req.params.id} has been deleted.`})
+            res.status(200).json({ message: `User ${req.params.id} has been deleted.` })
         } catch (err) {
             res.status(500).json(err)
         }
@@ -61,8 +60,8 @@ module.exports = {
     async addToFriendList(req, res) {
         try {
             const result = await User.findByIdAndUpdate(
-                { _id: req.params.id }, 
-                { $addToSet: { friends: req.params.friendId }}, 
+                { _id: req.params.id },
+                { $addToSet: { friends: req.params.friendId } },
                 { runValidators: true, new: true }
             );
             if (!result) {
@@ -77,10 +76,9 @@ module.exports = {
         try {
             const result = await User.findByIdAndUpdate(
                 { _id: req.params.id },
-                { $pull: { friends: req.params.friendId }},
+                { $pull: { friends: req.params.friendId } },
                 { runValidators: true, new: true }
             )
-
             if (!result) {
                 res.status(400).json('No friend found with that ID')
             }

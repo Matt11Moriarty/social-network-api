@@ -11,7 +11,7 @@ module.exports = {
     },
     async getOneThought(req, res) {
         try {
-            const thought = await Thought.findOne({ _id: req.params.id}).select('-__v');
+            const thought = await Thought.findOne({ _id: req.params.id }).select('-__v');
             if (!thought) {
                 res.status(400).json({ message: `No thought with ID ${req.params.id}.` })
             }
@@ -22,7 +22,7 @@ module.exports = {
     },
     async createOneThought(req, res) {
         try {
-            const user = await User.findOne({ username: req.body.username});
+            const user = await User.findOne({ username: req.body.username });
             const thought = await Thought.create(req.body);
             user.thoughts.push(thought)
             await user.save();
@@ -35,7 +35,7 @@ module.exports = {
     async updateOneThought(req, res) {
         try {
             const result = await Thought.findOneAndUpdate(
-                {_id: req.params.id},
+                { _id: req.params.id },
                 {
                     thoughtText: req.body.thoughtText
                 })
@@ -63,8 +63,8 @@ module.exports = {
             const reactionBody = req.body.reactionBody;
             const result = await Thought.findByIdAndUpdate(
                 { _id: req.params.thoughtId },
-                { $addToSet: { reactions: { reactionBody } }},
-                { new: true } 
+                { $addToSet: { reactions: { reactionBody } } },
+                { new: true }
             );
             if (!result) {
                 res.status(400).json({ message: `No thought found with ID ${req.params.thoughtId},` })
@@ -78,7 +78,7 @@ module.exports = {
         try {
             const result = await Thought.findByIdAndUpdate(
                 { _id: req.params.thoughtId },
-                { $pull: { reactions: {reactionId: req.params.reactionId }}},
+                { $pull: { reactions: { reactionId: req.params.reactionId } } },
                 { new: true }
             );
             if (!result) {
