@@ -53,7 +53,7 @@ module.exports = {
             if (!result) {
                 res.status(400).json({ message: `No thought found with ID ${req.params.id}.` })
             }
-            res.status(200).json({ message: `Thought ${req.params.id} has been updated.` })
+            res.status(200).json({ message: `Thought ${req.params.id} has been deleted.` })
         } catch (err) {
             res.status(500).json(err)
         }
