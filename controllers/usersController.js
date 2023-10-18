@@ -49,7 +49,7 @@ module.exports = {
         try {
             const result = await User.findByIdAndDelete({ _id: req.params.id })
             if (!result) {
-                res.status(400).json({ message: 'No use found with that ID' })
+                res.status(400).json({ message: 'No user found with that ID' })
             }
             res.status(200).json({ message: `User ${req.params.id} has been deleted.`})
         } catch (err) {
@@ -60,14 +60,30 @@ module.exports = {
         try {
             const result = await User.findByIdAndUpdate(
                 { _id: req.params.id }, 
-                { $addToSet: { friends: req.params.friendId } }, 
+                { $addToSet: { friends: req.params.friendId }}, 
                 { runValidators: true, new: true }
             );
 
             if (!result) {
-                res.status(400).json({ message: 'No student found with that ID'})
+                res.status(400).json({ message: 'No friend found with that ID'})
             }
-            res.status(200).json(result);
+            res.status(200).json({ message: `Friend ${req.params.id} added to friend list.` });
+        } catch (err) {
+            res.status(500).json(err);
+        }
+    },
+    async removeFromFriendList(req, res) {
+        try {
+            const result = await User.findByIdAndUpdate(
+                { _id: req.params.id },
+                { $pull: { friends: req.params.friendId }},
+                { runValidators: true, new: true }
+            )
+
+            if (!result) {
+                res.status(400).json('No friend found with that ID')
+            }
+            res.status(200).json({ message: `Friend ${req.params.id} removed from friend list.` });
         } catch (err) {
             res.status(500).json(err);
         }
