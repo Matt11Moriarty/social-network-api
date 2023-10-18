@@ -1,8 +1,14 @@
 const router = require('express').Router();
 
-// const {
+const {
+    getAllThoughts,
+    getOneThought
+} = require('../../controllers/thoughtsController');
 
-// } = require
+router.route('/')
+    .get(getAllThoughts)
 
+router.route('/id')
+    .get(getOneThought)
 
 module.exports = router;

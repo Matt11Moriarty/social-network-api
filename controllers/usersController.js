@@ -1,4 +1,4 @@
-const { ObjectId } = require('mongoose').Types;
+// const { ObjectId } = require('mongoose').Types;
 const { User } = require('../models');
 
 module.exports = {
@@ -15,7 +15,7 @@ module.exports = {
             const user = await User.findOne({ _id: req.params.id }).select('-__v').lean();
 
             if (!user) {
-                return res.status(400).json({message: 'No user with this id'});
+                return res.status(400).json({message: `No user with id ${req.params.id}.` });
             }
             res.status(200).json({ user })
 
@@ -38,7 +38,7 @@ module.exports = {
                 email: req.body.email
             })
             if (!result) {
-                res.status(400).json({ message: 'No user found with that ID' })
+                res.status(400).json({ message: `No user found with ID ${req.params.id}.` })
             }
             res.status(200).json({ message: `User ${req.params.id} has been updated`})
         } catch (err) {
@@ -49,7 +49,7 @@ module.exports = {
         try {
             const result = await User.findByIdAndDelete({ _id: req.params.id })
             if (!result) {
-                res.status(400).json({ message: 'No user found with that ID' })
+                res.status(400).json({ message: `No user found with ID ${req.params.id}` })
             }
             res.status(200).json({ message: `User ${req.params.id} has been deleted.`})
         } catch (err) {
@@ -65,7 +65,7 @@ module.exports = {
             );
 
             if (!result) {
-                res.status(400).json({ message: 'No friend found with that ID'})
+                res.status(400).json({ message: `No friend found with ID ${req.params.friendId}.` })
             }
             res.status(200).json({ message: `Friend ${req.params.id} added to friend list.` });
         } catch (err) {
