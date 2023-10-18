@@ -42,6 +42,13 @@ thoughtSchema
     this._reactionCount = v;
 })
 
+thoughtSchema
+  .virtual('formattedCreatedAt')
+  .get(function () {
+    return new Date(this.createdAt).toLocaleString();
+  });
+
+
 const Thought = model('thought', thoughtSchema);
 
 module.exports = Thought;
