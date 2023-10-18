@@ -69,6 +69,21 @@ module.exports = {
         } catch (err) {
             res.status(500).json(err)
         }
+    },
+    async deleteOneReaction(req, res) {
+        try {
+            const result = await Thought.findByIdAndUpdate(
+                { _id: req.params.thoughtId },
+                { $pull: { reactions: {reactionId: req.params.reactionId }}},
+                { new: true }
+            );
+            if (!result) {
+                res.status(400).json({ message: `No reaction found with ID ${req.params.reactionId}.` })
+            }
+            res.status(200).json({ message: `Reaction ${req.params.reactionId} removed from thought ${req.params.thoughtId}.` })
+        } catch (err) {
+            res.status(500).json(err)
+        }
     }
 }
 
