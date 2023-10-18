@@ -21,11 +21,13 @@ const reactionSchema = new Schema(
         }
     },
     {
-        toJSON: {
-            getters: true
-        },
-        id: false
+        // toJSON: {
+        //     getters: true
+        // },
+        _id: false
     }
 );
+
+// const Reaction = model('reaction', reactionSchema)
 
 module.exports = reactionSchema;
