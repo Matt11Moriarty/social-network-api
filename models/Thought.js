@@ -34,19 +34,19 @@ const thoughtSchema = new Schema(
 );
 
 thoughtSchema
-.virtual('reactionCount')
-.get(function () {
-    return this.reactions.length;
-})
-.set(function (v) {
-    this._reactionCount = v;
-})
+    .virtual('reactionCount')
+    .get(function () {
+        return this.reactions.length;
+    })
+    .set(function (v) {
+        this._reactionCount = v;
+    })
 
 thoughtSchema
-  .virtual('formattedCreatedAt')
-  .get(function () {
-    return new Date(this.createdAt).toLocaleString();
-  });
+    .virtual('formattedCreatedAt')
+    .get(function () {
+        return new Date(this.createdAt).toLocaleString();
+    });
 
 
 const Thought = model('thought', thoughtSchema);

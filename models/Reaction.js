@@ -21,13 +21,18 @@ const reactionSchema = new Schema(
         }
     },
     {
-        // toJSON: {
-        //     getters: true
-        // },
+        toJSON: {
+            virtuals: true,
+            getters: true
+        },
         _id: false
     }
 );
 
-// const Reaction = model('reaction', reactionSchema)
+reactionSchema
+  .virtual('formattedCreatedAt')
+  .get(function () {
+    return new Date(this.createdAt).toLocaleString();
+  });
 
 module.exports = reactionSchema;
