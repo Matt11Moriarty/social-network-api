@@ -33,10 +33,12 @@ module.exports = {
     },
     async updateOneUser(req, res) {
         try {
-            const result = await User.findOneAndUpdate({ _id: req.params.id }, {
-                username: req.body.username,
-                email: req.body.email
-            })
+            const result = await User.findOneAndUpdate(
+                { _id: req.params.id }, 
+                { 
+                    username: req.body.username,
+                    email: req.body.email
+                })
             if (!result) {
                 res.status(400).json({ message: `No user found with ID ${req.params.id}.` })
             }
@@ -63,7 +65,6 @@ module.exports = {
                 { $addToSet: { friends: req.params.friendId }}, 
                 { runValidators: true, new: true }
             );
-
             if (!result) {
                 res.status(400).json({ message: `No friend found with ID ${req.params.friendId}.` })
             }
