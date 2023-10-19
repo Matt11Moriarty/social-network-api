@@ -24,6 +24,8 @@ In building this out, my understanding of NoSQL databases was solidified, and I 
 Once the server is started, you can create, update, and delete resources as desired.
 All routes can be found in the `routes` folder.
 
+Full App Demo: https://drive.google.com/file/d/1Jeh_oq53ZBz579HTAClih-4i7aYKZzt0/view
+
 ![Demo gif](public/images/social_api.gif)
 
 ## Credits
